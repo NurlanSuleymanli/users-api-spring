@@ -1,5 +1,6 @@
-package com.nurlansuleymanli.practicespring.Repository;
+package com.nurlansuleymanli.practicespring.repository;
 
+import com.nurlansuleymanli.practicespring.exception.UserNotFoundException;
 import com.nurlansuleymanli.practicespring.model.User;
 import org.springframework.stereotype.Service;
 
@@ -77,10 +78,13 @@ public class UserRepository {
 
             ResultSet  rs= preparedStatement.executeQuery();
 
-            rs.next();
 
-            return new User(rs.getLong(1), rs.getString(2), rs.getString(3),
-                    rs.getInt(5), rs.getString(4));
+            if(rs.next()) {
+
+                return new User(rs.getLong(1), rs.getString(2), rs.getString(3),
+                        rs.getInt(5), rs.getString(4));
+            }
+            throw  new UserNotFoundException("User not found!");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

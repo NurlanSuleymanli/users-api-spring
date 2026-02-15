@@ -1,7 +1,8 @@
-package com.nurlansuleymanli.practicespring.Controller;
+package com.nurlansuleymanli.practicespring.controller;
 
-import com.nurlansuleymanli.practicespring.Service.UserService;
-import com.nurlansuleymanli.practicespring.model.User;
+import com.nurlansuleymanli.practicespring.service.UserService;
+import com.nurlansuleymanli.practicespring.dto.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -9,26 +10,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping
-    public void createUser(@RequestBody User user){
+    public void createUser(@RequestBody UserDto user){
         userService.createService(user);
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<UserDto> getAllUsers(){
         return userService.getAllUsersService();
     }
 
     @GetMapping("/{id}")
-    public User getUserByID(@PathVariable Long id){
+    public UserDto getUserByID(@PathVariable Long id){
         return userService.getUserByIDService(id);
     }
 
